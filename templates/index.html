@@ -1,0 +1,450 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+		<link rel="stylesheet" href="{% static '' %}assests/css/style2.css">
+		<style>
+			.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+	margin-left: -20px;
+    background-color: white;
+    min-width: 80px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-menu li {
+    list-style: none;
+    padding: 8px 16px;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.dropdown-menu li:hover {
+    background-color: #f1f1f1;
+}
+
+		</style>
+</head>
+<br><br>
+<main class="conetent">
+    <div class="container-fuild" style="padding: 20px;">
+
+		<h1 class="h3 mb-3">Chat App</h1>
+
+		<div class="card">
+			<div class="row g-0 d-flex ">
+				<div class="col-12 col-lg-12 col-xl-3 d-flex flex-column chat-sidebars align-items-center justify-content-center" style="width: 105px;">
+					<div class="icons d-flex flex-column align-items-center justify-content-center chat-sidebar ms-4">
+						<a href="#" class="chat-sidebar-logo">
+							<i class="ri-chat-1-fill"></i>
+						</a>
+						<ul class="chat-sidebar-menu">
+							<li class="active"><a href="#" data-title="Chats"><i class="ri-chat-3-line"></i></a></li>
+							<li><a href="#" data-title="Contacts"><i class="ri-contacts-line"></i></a></li>
+							<li><a href="#" data-title="Documents"><i class="ri-folder-line"></i></a></li>
+							<li><a href="#" data-title="Settings"><i class="ri-settings-line"></i></a></li>
+							<li class="chat-sidebar-profile">
+								<button type="button" class="chat-sidebar-profile-toggle">
+									<img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+								</button>
+								<li><a href="{% url 'sign-out' %}"><i class="ri-logout-box-line"></i> </a></li>
+								<ul class="chat-sidebar-profile-dropdown">
+									<li><a href="#"><i class="ri-user-line"></i> Profile</a></li>
+									<li><a href="#"><i class="ri-logout-box-line"></i> Logout</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-12 col-lg-12 col-xl-3 border-right chat-messages chat-mess" >	
+
+					<div class="px-4 d-none d-md-block">
+						<div>
+                            <h3>Welcome to <p style="display: inline-block; margin-right: 20px;">Chat App &#128536</p> <span style="font-size: 16px;">@{{request.user|title}}</span></h3>
+							<p></p>
+                            
+                        </div>
+						<div class="d-flex gap-2 flex-column">
+							<div class="status-scroll d-flex gap-2	">
+								<!-- <div class="status-more" data-toggle="modal" data-target="#imageModal" data-img-src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60">
+									<div class="status">
+										<img src="" alt="">
+									</div>
+									<span>@chidosky</span>
+								</div> -->
+								<div class="stories border-0 w-100">
+									<button class="stories__left-button" data-toggle="modal" data-target="#imageModal" data-img-src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+											<path fill="var(--primary)" d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"></path>
+										</svg>
+									</button>
+									<div class="stories__content draggable">
+				
+				
+										<div id="chat-section" class="section d-flex gap-2 draggable">
+											{% for m in users %}
+											<a href="" class="draggable section-group list-group-item list-group-item-action border rounded-3">
+												<div class="badge bg-success float-right"></div>
+												<div class="d-flex align-items-start flex-column justify-content-center" style="height: 150px; width: 80px;">
+													<img src="{{ m.user.profiles.image.url }}" class="rounded-circle " alt="img" width="100%" height="100%">
+													<div class="flex- ml-6">
+														<div class="small d-flex gap-1"><span class="fas fa-circle chat-online d-inline"></span> @{{m.username}}</div>
+													</div>
+												</div>
+											</a>
+											{% endfor %}
+											<!-- Duplicate the section content for scrolling -->
+											 {% for m in users %}
+											<a href="" class="draggable section-group list-group-item list-group-item-action border rounded-3">
+												<div class="badge bg-success float-right"></div>
+												<div class="d-flex align-items-start flex-column justify-content-center" style="height: 150px; width: 80px;">
+													<img src="{{ m.user.profiles.image.url }}" class="rounded-circle " alt="img" width="100%" height="100%">
+													<div class="flex- ml-6">
+														<div class="small d-flex gap-1"><span class="fas fa-circle chat-online d-inline"></span> @{{m.username}}</div>
+													</div>
+												</div>
+											</a>
+											{% endfor %} 
+										</div>
+									</div>
+									<button class="stories__right-button">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+											<path fill="var(--primary)" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
+										</svg>
+									</button>
+								</div>
+								
+									
+							</div>
+							<div class="user-status d-flex gap-2">
+								<div class="status-scroll d-flex gap-2	">
+									<!-- <div class="status-more" data-toggle="modal" data-target="#imageModal" data-img-src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60">
+										<div class="status">
+											<img src="" alt="">
+										</div>
+										<span>@chidosky</span>
+									</div> -->
+									<div class="stories ">
+										<button class="stories__left-button">
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+												<path fill="var(--primary)" d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"></path>
+											</svg>
+										</button>
+										<div class="stories__content">
+					
+					
+											{% for story in stories %} 
+                         <a href="{% url 'profile' user %}" style="text-decoration: none;">
+                            <a href="{% url 'profile' user %}" button class="story" style="text-decoration: none;">
+                               <div class="story__avatar">
+                                   <div class="story__border" style=" position: relative;">
+                                       <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+                                           <circle r="31" cy="32" cx="32"/>
+                                       </svg> 
+                                </div>
+                                </svg>
+                                   <div class="story__picture">
+                                       <img src="{{story.user.profile.image.url}}" style="width: 80px; height: 80px; object-fit: cover;"> 
+                                       <img src="{% if request.user.profile.image and request.user.profile.image.url %}{{ request.user.profile.image.url }}{% else %}{% static 'media/default.jpg' %}{% endif %}" alt="User Picture">
+                                   </div>
+                               </div>
+                               <span class="story__user">@{{story.user.username}}</span>
+                               </a>
+                           </button></a> 
+                           {% endfor %}  
+
+										</div>
+										<button class="stories__right-button">
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+												<path fill="var(--primary)" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
+											</svg>
+										</button>
+									</div>
+									
+										
+								</div>
+								<!-- Modal structure -->
+								<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="imageModalLabel">Image View</h5>
+												<button style="border: none; background-color: transparent; width: 30px; height: 30px;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true" style="font-size: 30px;">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body text-center">
+												<div class="row">
+													<div class="col-2">
+														<button class="btn btn-secondary w-100" id="prevButton">&lt;</button>
+													</div>
+													<div class="col-8">
+														<img id="modalImage" src="" alt="Status Image" class="img-fluid mx-2">
+													</div>
+													<div class="col-2">
+														<button class="btn btn-secondary w-100" id="nextButton">&gt;</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="d-flex align-items-center">
+							<div class="flex-grow-1">
+								<div class="flex-grow-1">
+									<a href="{% url 'index' %}" class="btn btn-success mt-4 mb-4" data-section="chat-section">Chat</a>
+									<a href="#" class="btn btn-success mt-4 mb-4" data-section="people-section">People</a>
+									<a href="{% url 'chat-list' %}" class="btn btn-success mt-4 mb-4" >Groups</a>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+						
+					<div id="chat-section" class="section">
+						{% for message in messages %}
+						<a href="{% url 'directs' message.user.username %}" class="list-group-item list-group-item-action border-0 {% if active_direct == message.user.username %}active{% endif %}">
+							<div class="badge bg-success float-right"></div>
+							<div class="d-flex align-items-start pb-2">
+								<img src="{{ message.user.profiles.image.url }}" class="rounded-circle mr-1" alt="img" width="40" height="40">
+								<div class="flex-grow-1 ml-6">
+									{% comment %} <b>{{ message.user.profile.first_name }} {{ message.user.profile.last_name }}</b> {% endcomment %}
+									<div class="small"><span class="fas fa-circle chat-online"></span> @{{ message.username }}</div>
+								</div>
+							</div>
+						</a>
+						{% endfor %}
+					</div>
+					
+					<!-- People Section -->
+					<div id="people-section" class="section d-none">
+						<!-- Add people section content here -->
+						<!-- {% for message in messages %}
+						<a href="{% url 'directs' message.user.username %}" class="list-group-item list-group-item-action border-0 {% if active_direct == message.user.username %}active{% endif %}">
+							<div class="badge bg-success float-right"></div>
+							<div class="d-flex align-items-start pb-2">
+								<img src="{{ message.user.profile.image.url }}" class="rounded-circle mr-1" alt="img" width="40" height="40">
+								<div class="flex-grow-1 ml-6">
+									<b>{{message.user.profile.first_name}} {{message.user.profile.last_name}}</b>
+									<div class="small"><span class="fas fa-circle chat-online"></span> @{{message.user.username}}</div>
+								</div>
+							</div>
+						</a>
+						{% endfor %} -->
+					</div>
+					
+					<!-- Rooms Section -->
+					<div id="rooms-section" class="section d-none">
+						<!-- Add rooms section content here -->
+						<!-- {% for message in messages %}
+						<a href="{% url 'directs' message.user.username %}" class="list-group-item list-group-item-action border-0 {% if active_direct == message.user.username %}active{% endif %}">
+							<div class="badge bg-success float-right"></div>
+							<div class="d-flex align-items-start pb-2">
+								<img src="{{ message.user.profile.image.url }}" class="rounded-circle mr-1" alt="img" width="40" height="40">
+								<div class="flex-grow-1 ml-6">
+									<b>{{message.user.profile.first_name}} {{message.user.profile.last_name}}</b>
+									<div class="small"><span class="fas fa-circle chat-online"></span> @{{message.user.username}}</div>
+								</div>
+							</div>
+						</a>
+						{% endfor %} -->
+					</div>
+
+						<!-- </div> -->
+					<hr class="d-block d-lg-none mt-1 mb-0">
+				</div>
+                
+				<div class="col-12 col-lg-7 col-xl-8">
+					
+					{% if not directs %}
+                      <div class="d-flex justify-content-center align-items-center w-100 h-100">
+                        <h3>Send and recieve messages 😁🥳</h3>
+                      </div>
+					  {% else %}
+					{% for direct in directs %}
+                    {% if forloop.first %}
+						<div class="py-2 px-4 border-bottom d-none d-lg-block">
+							<div class="d-flex align-items-center py-1">
+								<div class="position-relative">
+									<img src="{{ directs.recipient.profiles.image.url }}" class="rounded-circle me-2" alt="Sharon Lessman" width="40" height="40">
+								</div>
+								<div class="flex-grow-1 pl-3">
+									<strong style="display: flex; gap: 5px; align-items: center;"><div class="small" ><span class="fas fa-circle chat-online mt-1"></span></div><div>{{direct.recipient.username}}</div></strong>
+
+									<!-- <div class="text-muted small"><em>Typing...</em></div> -->
+									<div class="text-muted small"><em>Typing...</em></div>
+								</div>
+								<div>
+									<button class="btn btn-primary btn-lg mr-1 px-3">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone feather-lg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+										</svg>
+									</button>
+									<button class="btn btn-info btn-lg mr-1 px-3 d-none d-md-inline-block">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video feather-lg"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+									</button>
+									<div class="dropdown-container d-inline-block" >
+										<button class="btn btn-light border btn-lg px-3" type="button">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal feather-lg">
+												<circle cx="12" cy="12" r="1"></circle>
+												<circle cx="19" cy="12" r="1"></circle>
+												<circle cx="5" cy="12" r="1"></circle>
+											</svg>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a class="" id="profiles-tab" data-toggle="tab" href="#profiles" role="tab" aria-controls="profiles" aria-selected="false">Profile</a></li>
+										</ul>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					{% endif %}
+					{% endfor %}
+					
+
+									
+
+
+					<div class="position-relative">
+						<div class="chat-messages  chat-message p-4">
+
+									{% for direct in directs %}
+										{% if direct.sender == request.user %}
+											<div class="chat-message-right pb-2 conversation-item me d-flex gap-2" id="message-{{ direct.pk }}">
+												<div>
+													<a href=""><img src="{{ request.user.profiles.image.url }}" class="rounded-circle mr-1" alt="img" width="40" height="40"></a>
+													<div class="text-muted small text-nowrap mt-2" style="font-size:10px; color: rgba(180, 180, 180, 0);"><p style="font-size:10px; color: black;">{{direct.date|date:"d M, Y"}}</p></div>
+													<input type="hidden" name="" id="current-date" value="{{direct.date|date:'d M, Y'}}" data-current-date="{{direct.date|date:'d M, Y'}}">
+												</div>
+												<div class="flex-shrink-1 bg-light rounded py-4 px-3 ml-3 cursor  conversation-item-wrapper position-relative">
+													<div class="mgs-body">{{direct.body}}</div>
+													
+													<div class="conversation-item-dropdown">
+														<button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+														<ul class="conversation-item-dropdown-list">
+															<li><a href="#"><i class="ri-share-forward-line"></i> Forward</a></li>
+															<li><a href="#" class="copy-text" data-copy-target=".mgs-body"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" class="icon-md-heavy mr-2"><path fill="currentColor" fill-rule="evenodd" d="M7 5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-2v2a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h2zm2 2h5a3 3 0 0 1 3 3v5h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1zM5 9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1z" clip-rule="evenodd"></path></svg> Copy</a></li>
+															<!-- Ensure the data attributes are correct for edit -->
+														<li><a href="#" class="edit-text" data-message-id="{{ direct.pk }}" data-message-body="{{ direct.body }}"><i class="ri-edit-line"></i> Edit</a></li>
+
+															<input type="hidden" name="" value="{% url 'delete-direct' direct.pk %}" data-delete-direct="{% url 'delete-direct' direct.pk %}">
+															<li><a href="{% url 'delete-direct' direct.pk %}"><i class="ri-delete-bin-line"></i> Delete</a></li>
+														</ul>
+													</div>
+												</div>
+												
+											</div>
+										{% else %}
+											<div class="chat-message-left pb-2 conversation-item">
+												<div>
+													<a href=""><img src="{{ direct.sender.profiles.image.url }}" class="rounded-circle mr-1" alt="img" width="40" height="40"></a>
+													<div class="text-muted small text-nowrap mt-2" style="font-size:10px; color: rgba(180, 180, 180, 0);"><p style="font-size:10px; color: black;">{{direct.date|date:"d M, Y"}}</p></div>
+
+												</div>
+												<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3 conversation-item-wrapper position-relative">
+													{{direct.body}}
+													
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+									
+
+						</div>
+					</div>
+
+						
+						<div class="flex-grow-0 py-3 px-4 border-top">
+							<form method="POST" id="send-form" data-user-profile-image-url="{{ request.user.profiles.image.url }}" data-current-time="{{ directs.date|date:'d M, Y' }}">
+								{% csrf_token %}
+								<div class="input-group">
+									<span class="input-group-text attach_btn"><i class="ri-emotion-line"></i></span>
+									<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+									<input type="hidden" name="to_user" value="{{ active_direct }}" id="to_user">
+									<input type="hidden" name="message_id" id="message_id" value="">
+									<textarea class="form-control type_msg" name="body" id="body" rows="1" placeholder="Type your message..."></textarea>
+									<button class="btn btn-primary btn-sub" disabled type="submit"><i class="fas fa-location-arrow rotate"></i></button>
+								</div>
+							</form>
+							
+						</div>
+
+						<!-- Form for editing an existing message -->
+					<form method="POST" id="edit-form" class="d-none" data-user-profile-image-url="{{ request.user.profiles.image.url }}" data-current-time="{{ directs.date|date:'d M, Y' }}">
+						{% csrf_token %}
+						<div class="input-group">
+							<span class="input-group-text attach_btn"><i class="ri-emotion-line"></i></span>
+							<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+							<input type="hidden" name="message_id" id="edit-message-id" value="">
+							<textarea class="form-control type_msg" name="body" id="edit-body" rows="1" placeholder="Edit your message..."></textarea>
+							<button class="btn btn-primary btn-sub" type="submit"><i class="fas fa-location-arrow rotate"></i></button>
+						</div>
+					</form>
+					{% endif %}
+					</div>
+			</div>
+		</div>
+	</div>
+</main>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+<script src="{% static 'assests/js/main.js'%}"></script>
+<script>
+	$(document).ready(function() {
+			// Toggle sections based on the clicked button
+			$('a[data-section]').click(function(event) {
+				event.preventDefault();
+				var sectionId = $(this).data('section');
+
+				// Hide all sections
+				$('.section').addClass('d-none');
+
+				// Show the selected section
+				$('#' + sectionId).removeClass('d-none');
+			});
+			
+			// Dropdown functionality
+			$('.dropdown-container button').on('click', function() {
+				$(this).siblings('.dropdown-menu').toggle();
+			});
+
+			// Hide the dropdown when clicking outside of it
+			$(document).on('click', function(event) {
+				if (!$(event.target).closest('.dropdown-container').length) {
+					$('.dropdown-menu').hide();
+				}
+			});
+		});
+</script>
+</html>
+{% endblock content %}
+

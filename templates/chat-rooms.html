@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+		<link rel="stylesheet" href="{% static '' %}assests/css/style2.css">
+		<style>
+			a{
+				text-decoration: none;
+				color: black;
+			}
+
+            .stories__content {
+            display: flex;
+            overflow-x: scroll;
+            scroll-behavior: smooth;
+        }
+
+        
+
+        .section {
+            display: flex;
+        }
+
+        .draggable {
+            cursor: grab;
+        }
+
+        .draggable:active {
+            cursor: grabbing;
+        }
+			.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+	margin-left: -20px;
+    background-color: white;
+    min-width: 80px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-menu li {
+    list-style: none;
+    padding: 8px 16px;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.dropdown-menu li:hover {
+    background-color: #f1f1f1;
+}
+
+		</style>
+</head>
+<br><br>
+<main class="conetent">
+    <div class="container-fuild" style="padding: 20px;">
+
+		<h1 class="h3 mb-3">Chat App</h1>
+
+		<div class="card">
+			<div class="row g-0 d-flex ">
+				<div class="col-12 col-lg-12 col-xl-3 d-flex flex-column chat-sidebars align-items-center justify-content-center" style="width: 105px;">
+					<div class="icons d-flex flex-column align-items-center justify-content-center chat-sidebar ms-4">
+						<a href="#" class="chat-sidebar-logo">
+							<i class="ri-chat-1-fill"></i>
+						</a>
+						<ul class="chat-sidebar-menu">
+							<li class="active"><a href="#" data-title="Chats"><i class="ri-chat-3-line"></i></a></li>
+							<li><a href="#" data-title="Contacts"><i class="ri-contacts-line"></i></a></li>
+							<li><a href="#" data-title="Documents"><i class="ri-folder-line"></i></a></li>
+							<li><a href="#" data-title="Settings"><i class="ri-settings-line"></i></a></li>
+							<li class="chat-sidebar-profile">
+								<button type="button" class="chat-sidebar-profile-toggle">
+									<img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
+								</button>
+								<li><a href="{% url 'sign-out' %}"><i class="ri-logout-box-line"></i> </a></li>
+								<ul class="chat-sidebar-profile-dropdown">
+									<li><a href="#"><i class="ri-user-line"></i> Profile</a></li>
+									<li><a href="#"><i class="ri-logout-box-line"></i> Logout</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-12 col-lg-12 col-xl-3 border-right chat-messages chat-mess" >	
+
+					<div class="px-4 d-none d-md-block">
+                        <div>
+                            <h3>Welcome to</h3>
+                            <p>{{room.roomname}}&#128536</p>
+                        </div>
+						<div class="d-flex gap-2">
+							<div class="user-status d-flex gap-2">
+								<div class="status-scroll d-flex gap-2	">
+									<!-- <div class="status-more" data-toggle="modal" data-target="#imageModal" data-img-src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60">
+										<div class="status">
+											<img src="" alt="">
+										</div>
+										<span>@chidosky</span>
+									</div> -->
+									<div class="stories border-0 w-100">
+										<button class="stories__left-button" data-toggle="modal" data-target="#imageModal" data-img-src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60">
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+												<path fill="var(--primary)" d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"></path>
+											</svg>
+										</button>
+										<div class="stories__content draggable">
+					
+					
+                                            <div id="chat-section" class="section d-flex gap-2 draggable">
+                                                {% for m in rooms %}
+                                                <a href="{% url 'chat-room' m.id %}" class="draggable section-group list-group-item list-group-item-action border rounded-3">
+                                                    <div class="badge bg-success float-right"></div>
+                                                    <div class="d-flex align-items-start flex-column justify-content-center" style="height: 150px; width: 80px;">
+                                                        <img src="{{ m.image.url }}" class="rounded-circle " alt="img" width="100%" height="100%">
+                                                        <div class="flex- ml-6">
+                                                            <div class="small d-flex gap-1"><span class="fas fa-circle chat-online d-inline"></span> @{{m.roomname}}</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                {% endfor %}
+                                                <!-- Duplicate the section content for scrolling -->
+                                                {% for m in rooms %}
+                                                <a href="{% url 'chat-room' m.id %}" class="draggable section-group list-group-item list-group-item-action border rounded-3">
+                                                    <div class="badge bg-success float-right"></div>
+                                                    <div class="d-flex align-items-start flex-column justify-content-center" style="height: 150px; width: 80px;">
+                                                        <img src="{{ m.image.url }}" class="rounded-circle " alt="img" width="100%" height="100%">
+                                                        <div class="flex- ml-6">
+                                                            <div class="small d-flex gap-1"><span class="fas fa-circle chat-online d-inline"></span> @{{m.roomname}}</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                {% endfor %}
+                                            </div>
+										</div>
+										<button class="stories__right-button">
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+												<path fill="var(--primary)" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
+											</svg>
+										</button>
+									</div>
+									
+										
+								</div>
+								
+
+							</div>
+						</div>
+						<div class="d-flex align-items-center">
+							<div class="flex-grow-1">
+								<div class="flex-grow-1">
+									<a href="{% url 'index' %}" class="btn btn-success mt-4 mb-4" data-section="chat-section">Chat</a>
+									<a href="#" class="btn btn-success mt-4 mb-4" data-section="people-section">Contacts</a>
+									<a href="#" class="btn btn-success mt-4 mb-4" data-section="rooms-section">Call</a>
+									<a href="#" class="btn btn-success mt-4 mb-4" data-section="rooms-section">Direct</a>
+                                    {% if request.user in room.members.all %}
+									<a href="" class="btn btn-success mt-4 mb-4" data-section="rooms-section">Leave Room</a>
+                                    {%  else %}
+									<a href="" class="btn btn-success mt-4 mb-4" data-section="rooms-section">Join</a>
+                                    {% endif %}
+								</div>
+								<!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+									<li class="nav-item" role="presentation">
+										<a class="nav-link active btn btn-success mt-4 mb-4"  id="chats-tab" data-toggle="tab" href="#chats" role="tab" aria-controls="chats" aria-selected="true">Chats</a>
+									</li>
+									<li class="nav-item" role="presentation">
+										<a class="nav-link btn btn-success mt-4 mb-4" id="chat-rooms-tab" data-toggle="tab" href="#chat-rooms" role="tab" aria-controls="chat-rooms" aria-selected="false">Chat Rooms</a>
+									</li>
+									<li class="nav-item" role="presentation">
+										<a class="nav-link btn btn-success mt-4 mb-4" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="false">People</a>
+									</li>
+									<li class="nav-item" role="presentation">
+										<a class="nav-link btn btn-success mt-4 mb-4" id="profiles-tab" data-toggle="tab" href="#profiles" role="tab" aria-controls="profiles" aria-selected="false">Profile</a>
+									</li>
+								</ul> -->
+							</div>
+						</div>
+					</div>
+						   <div id="chat-section" class="section w-100 d-flex flex-column gap-2">
+							{% for room in rooms %}
+                                <a href="{% url 'chat-room' room.id %}" class="list-group-item list-group-item-action border-0 {% if rooms == rooms.roomname %}active{% endif %}">
+                                    <div class="badge bg-success float-right"></div>
+                                    <div class="d-flex align-items-start pb-2 gap-2">
+                                        <img src="{{ room.image.url }}" class="rounded-circle mr-1" alt="img" width="40" height="40">
+                                        <div class="flex-grow-1 ml-6">
+                                            <div class="justify-content-between d-flex"><b>{{room.roomname}}</b><p class="d-inline m-0 small">{{room.date|date:" d M, Y "}}</p></div>
+                                            <div class="small align-items-center justify-content-between d-flex"><p class="d-inline m-0">{{room.description|truncatechars:30}}</p><span class="fas fa-circle chat-online"> @{{room.host.username}}</span> </div>
+                                        </div>
+                                    </div>
+                                </a>
+								{% endfor %}
+                            </div>
+					
+
+
+						<!-- </div> -->
+					<hr class="d-block d-lg-none mt-1 mb-0">
+				</div>
+                
+				<div class="col-12 col-lg-7 col-xl-8 p-3">
+
+					<div class="row">
+						{% for room in rooms %}
+						<a href="{% url 'chat-room' room.id %}" class="col-md-4" style="height: 400px;">
+							<div class=" d-flex gap-3 p-3 card">
+							<div class="w-100 h-50 d-flex align-items-center justify-content-center">
+								<img src="{{room.image.url}}" width="100px" height="100px" alt="">
+							</div>
+							<div class="flex-grow-1 ml-6">
+								<div class="justify-content-between d-flex"><b>{{room.roomname}}</b><p class="d-inline m-0 small">{{room.date|date:"d M, Y"}}</p></div>
+								<div class="small align-items-center justify-content-between d-flex"><p class="d-inline m-0 w-100">{{room.description|truncatechars:30}}</p> </div>
+								<div><span class="fas fa-circle chat-online text-center"> @{{room.host.username}}</span></div>
+							</div>
+						</div>
+						</a>
+						{% endfor %}
+					</div>
+				</div>	
+
+
+					<div class="position-relative d-none">
+						<div class="chat-messages  chat-message p-4">
+
+									{% for m in room_message %}
+										{% if m.user == request.user %}
+											<div class="chat-message-right pb-2 conversation-item me d-flex gap-2" id="message-{{ m.pk }}">
+												<div>
+													<a href=""><img src="{{ m.image.url }}" class="rounded-circle mr-1" alt="img" width="40" height="40"></a>
+													<div class="text-muted small text-nowrap mt-2" style="font-size:10px; color: rgba(180, 180, 180, 0);"><p style="font-size:10px; color: black;">{{m.date|timesince}}</p></div>
+													<input type="hidden" name="" id="current-date" value="{{m.date|date:'d M, Y'}}" data-current-date="{{direct.date|date:'d M, Y'}}">
+												</div>
+												<div class="flex-shrink-1 bg-light rounded py-4 px-3 ml-3 cursor  conversation-item-wrapper position-relative">
+													<div class="mgs-body">{{m.body}}</div>
+													
+													<div class="conversation-item-dropdown">
+														<button type="button" class="conversation-item-dropdown-toggle"><i class="ri-more-2-line"></i></button>
+														<ul class="conversation-item-dropdown-list">
+															<li><a href="#"><i class="ri-share-forward-line"></i> Forward</a></li>
+															<li><a href="#" class="copy-text" data-copy-target=".mgs-body"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" class="icon-md-heavy mr-2"><path fill="currentColor" fill-rule="evenodd" d="M7 5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-2v2a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h2zm2 2h5a3 3 0 0 1 3 3v5h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1zM5 9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1z" clip-rule="evenodd"></path></svg> Copy</a></li>
+															<!-- Ensure the data attributes are correct for edit -->
+														<li><a href="#" class="edit-text" data-message-id="{{ m.pk }}" data-message-body="{{ m.body }}"><i class="ri-edit-line"></i> Edit</a></li>
+
+															<input type="hidden" name="" value="" data-delete-direct="">
+															<li><a href=""><i class="ri-delete-bin-line"></i> Delete</a></li>
+														</ul>
+													</div>
+												</div>
+												
+											</div>
+										{% else %}
+											<div class="chat-message-left pb-2 conversation-item">
+												<div>
+													<a href=""><img src="{{ m.image.url }}" class="rounded-circle mr-1" alt="img" width="40" height="40"></a>
+													<div class="text-muted small text-nowrap mt-2" style="font-size:10px; color: rgba(180, 180, 180, 0);"><p style="font-size:10px; color: black;">{{m.date|timesince}}</p></div>
+
+												</div>
+												<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3 conversation-item-wrapper position-relative">
+													{{m.body}}
+													
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+									
+
+						</div>
+					</div>
+
+						
+						<div class="flex-grow-0 py-3 px-4 border-top d-none">
+							<form method="POST" id="send-form" data-user-profile-image-url="{{ request.user.profile.image.url }}" data-current-time="{{ directs.date|date:'d M, Y' }}">
+								{% csrf_token %}
+								<div class="input-group">
+									<span class="input-group-text attach_btn"><i class="ri-emotion-line"></i></span>
+									<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+									<input type="hidden" name="to_user" value="{{ active_direct }}" id="to_user">
+									<input type="hidden" name="message_id" id="message_id" value="">
+									<textarea class="form-control type_msg" name="body" id="body" rows="1" placeholder="Type your message..."></textarea>
+									<button class="btn btn-primary btn-sub" disabled type="submit"><i class="fas fa-location-arrow rotate"></i></button>
+								</div>
+							</form>
+							
+						</div>
+
+						<!-- Form for editing an existing message -->
+					<form method="POST" id="edit-form" class="d-none" data-user-profile-image-url="{{ request.user.profile.image.url }}" data-current-time="{{ directs.date|date:'d M, Y' }}">
+						{% csrf_token %}
+						<div class="input-group">
+							<span class="input-group-text attach_btn"><i class="ri-emotion-line"></i></span>
+							<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+							<input type="hidden" name="message_id" id="edit-message-id" value="">
+							<textarea class="form-control type_msg" name="body" id="edit-body" rows="1" placeholder="Edit your message..."></textarea>
+							<button class="btn btn-primary btn-sub" type="submit"><i class="fas fa-location-arrow rotate"></i></button>
+						</div>
+					</form>
+
+					</div>
+			</div>
+		</div>
+	</div>
+</main>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+<script src="{% static 'assests/js/main.js'%}"></script>
+<script>
+	$(document).ready(function() {
+			// Toggle sections based on the clicked button
+			// $('a[data-section]').click(function(event) {
+			// 	event.preventDefault();
+			// 	var sectionId = $(this).data('section');
+
+			// 	// Hide all sections
+			// 	$('.section').addClass('d-none');
+
+			// 	// Show the selected section
+			// 	$('#' + sectionId).removeClass('d-none');
+			// });
+			
+			// Dropdown functionality
+			$('.dropdown-container button').on('click', function() {
+				$(this).siblings('.dropdown-menu').toggle();
+			});
+
+			// Hide the dropdown when clicking outside of it
+			$(document).on('click', function(event) {
+				if (!$(event.target).closest('.dropdown-container').length) {
+					$('.dropdown-menu').hide();
+				}
+			});
+		});
+</script>
+
+<script>
+    const container = document.querySelector('.draggable');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    container.addEventListener('mousedown', (e) => {
+        isDown = true;
+        container.classList.add('active');
+        startX = e.pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isDown = false;
+        container.classList.remove('active');
+    });
+
+    container.addEventListener('mouseup', () => {
+        isDown = false;
+        container.classList.remove('active');
+    });
+
+    container.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 3; //scroll-fast
+        container.scrollLeft = scrollLeft - walk;
+    });
+</script>
+
+
+</html>
+{% endblock content %}
+
